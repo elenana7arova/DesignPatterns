@@ -1,0 +1,74 @@
+// MARK: - АБСТРАКТНЫЙ КЛАСС EMPLOYEE
+class Employee {
+    var name: String = ""
+    var telephone: String = ""
+    var email: String = ""
+    var position: String = ""
+    var salary: Float = 0.0
+    
+    init(name: String, telephone: String, email: String, position: String, salary: Float) {
+        self.name = name
+        self.telephone = telephone
+        self.email = email
+        self.position = position
+        self.salary = salary
+    }
+    
+    func startWork() {
+        print("Я начал_а работать")
+    }
+    
+    func quitWork() {
+        print("Я закончил_а работать")
+    }
+    
+    func workProcess(){
+        startWork()
+        quitWork()
+    }
+}
+
+// MARK: - КЛАССЫ-НАСЛЕДНИКИ
+class Manager: Employee {
+    init(name: String, telephone: String, email: String) {
+        super.init(name: name, telephone: telephone, email: email, position: "Менеджер", salary: 40000)
+    }
+    
+    func callClient() {
+        print("Решаю с клиентом вопросы по его заказу")
+    }
+    
+    override func workProcess() {
+        super.startWork()
+        callClient()
+        super.quitWork()
+    }
+}
+
+class Courier: Employee {
+    var bikeId: String = ""
+    
+    init(name: String, telephone: String, email: String, bikeId: String) {
+        self.bikeId = bikeId
+        super.init(name: name, telephone: telephone, email: email, position: "Курьер", salary: 30000)
+    }
+    
+    func takeBike() {
+        print("Взял велосипед с номером \(bikeId)")
+    }
+    
+    override func workProcess() {
+        takeBike()
+        super.workProcess()
+    }
+}
+
+// MARK: - TEST
+let employeeManager = Manager(name: "Марина Викторовна", telephone: "7 934 245 23 46", email: "marina@mail.ru")
+let employeeCourier = Courier(name: "Виктор Александров", telephone: "7 923 523 12 54", email: "vitya214@gmail.com", bikeId: "21jksfd2")
+
+employeeManager.workProcess()
+print("Моя зарплата = \(employeeManager.salary)")
+print("---------")
+employeeCourier.workProcess()
+print("Моя зарплата = \(employeeCourier.salary)")
