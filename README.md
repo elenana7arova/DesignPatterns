@@ -1,2 +1,2 @@
-# designPatterns
+# Design Patterns
 Несколько реализаций паттернов программирования на Swift 5
