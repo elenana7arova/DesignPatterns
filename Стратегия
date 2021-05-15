@@ -1,8 +1,9 @@
-//: -MARK
+// MARK: - ПРОТОКОЛ СТРАТЕГИЯ
 protocol Strategy {
     func doStrategy() -> Int
 }
 
+// MARK: - КЛАСС ПЕРВОЙ СТРАТЕГИИ
 class StrategyVIP: Strategy {
     func doStrategy() -> Int {
         print("Доставка будет бесплатной")
@@ -10,6 +11,7 @@ class StrategyVIP: Strategy {
     }
 }
 
+// MARK: - КЛАСС ВТОРОЙ СТРАТЕГИИ
 class StrategyNormal: Strategy {
     func doStrategy() -> Int {
         print("Доставка будет стоить 300 рублей")
