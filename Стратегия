@@ -1,0 +1,73 @@
+//: -MARK
+protocol Strategy {
+    func doStrategy() -> Int
+}
+
+class StrategyVIP: Strategy {
+    func doStrategy() -> Int {
+        print("Доставка будет бесплатной")
+        return 0
+    }
+}
+
+class StrategyNormal: Strategy {
+    func doStrategy() -> Int {
+        print("Доставка будет стоить 300 рублей")
+        return 300
+    }
+}
+
+class Instrument {
+    var brand: String
+    var model: String
+    var color: String
+    var price: Double
+    
+    init(brand: String, model: String, color: String, price: Double) {
+        self.brand = brand
+        self.model = model
+        self.color = color
+        self.price = price
+    }
+}
+
+class TotalPrice {
+    var instrument: Instrument
+    var price: Double {
+        get {
+            return instrument.price
+        }
+    }
+    var quantity: Int
+    var priceWithoutShipping: Double {
+        get {
+            return price * Double(quantity)
+        }
+    }
+    var shipping: Strategy
+    
+    init(instrument: Instrument, quantity: Int, shipping: Strategy) {
+        self.instrument = instrument
+        self.quantity = quantity
+        self.shipping = shipping
+    }
+    
+    func changeStrategy(newShipping: Strategy) {
+        self.shipping = newShipping
+    }
+    
+    func showFullPrice() {
+        let shipping = self.shipping.doStrategy()
+        print("Полная стоимость с учетом доставки составляет \(priceWithoutShipping + Double(shipping))")
+    }
+}
+let guitar = Instrument(brand: "Fender", model: "DF 34-64K", color: "Черная", price: 15000)
+let strategyVIP = StrategyVIP()
+let strategyNormal = StrategyNormal()
+
+let totalPrice = TotalPrice(instrument: guitar, quantity: 2, shipping: strategyVIP)
+totalPrice.showFullPrice()
+print("-----------------------------------------------------------")
+totalPrice.changeStrategy(newShipping: strategyNormal)
+totalPrice.showFullPrice()
+
