@@ -1,0 +1,45 @@
+
+// Mark: - КЛАСС, С КОТОРЫМ КЛИЕНТ МОЖЕТ РАБОТАТЬ
+class Cash {
+    func request() -> String {
+        return "Оплата с помощью наличных успешно проведена."
+    }
+}
+
+// Mark: - КЛАСС, С КОТОРЫМ КЛИЕНТ НЕ МОЖЕТ РАБОТАТЬ
+class Card {
+    public func specificRequest() -> String {
+        //return ".eetpadA eht fo roivaheb laicepS"
+        return "Оплата с помощью карты приводит к ошибке."
+    }
+}
+
+// Mark: - АДАПТЕР, С ПОМОЩЬЮ КОТОРОГО КЛИЕНТ СМОЖЕТ РАБОТАТЬ И С CARD, И С CASH
+class Terminal: Cash {
+    private var adaptee: Card
+    init(_ adaptee: Card) {
+        self.adaptee = adaptee
+    }
+
+    override func request() -> String {
+        return "Оплата с помощью карты успешно проведена."
+    }
+}
+
+// Mark: - КЛИЕНТ
+class Client {
+    static func makesPayment(target: Cash) {
+        print(target.request())
+    }
+}
+
+// Mark: - ТЕСТИРОВАНИЕ
+print("Клиент может работать с наличными")
+Client.makesPayment(target: Cash())
+print("")
+let adaptee = Card()
+print("Клиент не может работать с картой")
+print(adaptee.specificRequest())
+print("")
+print("Но клиент может работать с картой с помощью терминала")
+Client.makesPayment(target: Terminal(adaptee))
