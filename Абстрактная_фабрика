@@ -1,0 +1,78 @@
+// MARK: - АБСТРАКТНАЯ ФАБРИКА
+protocol ClothesShop {
+    func createSkirt() -> Skirt
+    func createTrousers() -> Trousers
+}
+
+// MARK: - КОНКРЕТНЫЕ ФАБРИКИ
+class Zara: ClothesShop {
+    func createSkirt() -> Skirt {
+        return ZaraSkirt()
+    }
+
+    func createTrousers() -> Trousers {
+        return ZaraTrousers()
+    }
+}
+
+class Mango: ClothesShop {
+    func createSkirt() -> Skirt {
+        return MangoSkirt()
+    }
+
+    func createTrousers() -> Trousers {
+        return MangoTrousers()
+    }
+}
+
+// MARK: - АБСТРАКТНЫЕ ПРОДУКТЫ
+protocol Skirt {
+    func sellSkirt() -> String
+}
+
+protocol Trousers {
+    func sellTrousers() -> String
+}
+
+// MARK: - КОНКРЕТНЫЕ ПРОДУКТЫ
+class ZaraSkirt: Skirt {
+    func sellSkirt() -> String {
+        return "The skirt by Zara was selled."
+    }
+}
+
+class MangoSkirt: Skirt {
+    func sellSkirt() -> String {
+        return "The skirt by Mango was selled."
+    }
+}
+
+class ZaraTrousers: Trousers {
+    func sellTrousers() -> String {
+        return "The trousers by Zara were selled."
+    }
+}
+
+class MangoTrousers: Trousers {
+    func sellTrousers() -> String {
+        return "The trousers by Mango were selled."
+    }
+}
+
+// MARK: - КЛАСС, РАБОТАЮЩИЙ С АБСТРАКЦИЯМИ
+class Client {
+    static func sellings(in shop: ClothesShop) {
+        let newSkirt = shop.createSkirt()
+        let newTrousers = shop.createTrousers()
+
+        print(newTrousers.sellTrousers())
+        print(newSkirt.sellSkirt())
+    }
+}
+
+// MARK: - ТЕСТИРОВАНИЕ
+print("---------------FIRST SHOP ZARA----------------")
+Client.sellings(in: Zara())
+
+print("-------------SECOND SHOP MANGO----------------")
+Client.sellings(in: Mango())
